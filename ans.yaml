@@ -1,0 +1,25 @@
+---
+- name: Install Nginx on localhost
+  hosts: local
+  become: yes  # Use sudo to run commands as root
+  tasks:
+    - name: Update apt package index
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: latest
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Ensure Nginx is installed correctly
+      command: nginx -v
+      register: nginx_version
+
+    
